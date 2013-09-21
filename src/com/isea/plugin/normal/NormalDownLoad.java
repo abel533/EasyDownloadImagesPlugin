@@ -13,9 +13,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.isea.basic.ALoggerProgress;
+import com.isea.basic.IDownload;
 import com.isea.basic.Md5Utils;
 
-public class NormalDownLoad extends ALoggerProgress{
+public class NormalDownLoad extends ALoggerProgress implements IDownload{
+	private boolean isstart = true;
 	
 	/**
 	 * 获取图片下载地址
@@ -113,15 +115,7 @@ public class NormalDownLoad extends ALoggerProgress{
 		}
 	}
 	
-	/**
-	 * 批量下载图片
-	 * @param savePath
-	 * @param url
-	 * @param selector
-	 * @param page
-	 * @param pageSize
-	 * @param first true - 首页不同
-	 */
+	@Override
 	public void downloadMore(final String savePath, 
 			final String url, 
 			final String selector,
@@ -129,6 +123,8 @@ public class NormalDownLoad extends ALoggerProgress{
 			final int start,
 			final int pageSize,
 			final boolean first){
+		//开始下载
+		isstart = true;
 		String childUrl = null;
 		String pageTemp = page;
 		if(!pageTemp.startsWith("/")){
@@ -141,21 +137,31 @@ public class NormalDownLoad extends ALoggerProgress{
 		List<String> list = null;
 		
 		for(;_start<pageSize;_start++){
-			progress((int)(100*(float)_start-start)/pageSize);
-			tips("正在下载第 "+_start+" 页");
-			if(_start==1&&first){
-				childUrl = url;
+			if(isstart){
+				progress((int)(100*(float)_start-start)/pageSize);
+				tips("正在下载第 "+_start+" 页");
+				if(_start==1&&first){
+					childUrl = url;
+				}
+				else{
+					childUrl = url + pageTemp + _start;
+				}
+				try {
+					log("开始下载地址:"+childUrl);
+					list = getSrcPath(childUrl, selector);
+					downLoadImages(list, savePath);
+				} catch (Exception e) {
+					log(e.getMessage());
+				}
 			}
 			else{
-				childUrl = url + pageTemp + _start;
-			}
-			try {
-				log("开始下载地址:"+childUrl);
-				list = getSrcPath(childUrl, selector);
-				downLoadImages(list, savePath);
-			} catch (Exception e) {
-				log(e.getMessage());
+				log("终止下载!");
 			}
 		}
+	}
+
+	@Override
+	public void stop() {
+		isstart = false;
 	}
 }

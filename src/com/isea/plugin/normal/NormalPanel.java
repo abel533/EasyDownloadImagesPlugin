@@ -99,9 +99,8 @@ public class NormalPanel extends BasePanel {
 		}
 		log("开始下载");
 		log("保存路径:"+savePath);
-		NormalDownLoad normalDownLoad = new NormalDownLoad();
-		this.setDownloadHelper(normalDownLoad);
-		normalDownLoad.downloadMore(savePath, 
+		this.setDownloadHelper(new NormalDownLoad());
+		downloadHelper.downloadMore(savePath, 
 				url.getText(), 
 				selector.getText(), 
 				page.getText(),
@@ -146,5 +145,11 @@ public class NormalPanel extends BasePanel {
 		start.setText("");
 		pageSize.setText("");
 		firstRadio.setSelected(true);
+	}
+
+	@Override
+	public void stop() {
+		//停止下载
+		downloadHelper.stop();
 	}
 }
