@@ -57,6 +57,7 @@ public class TiebaDownLoad extends BaseDownload implements IDownload{
 				
 			}else{
 				log("终止下载!");
+				break;
 			}
 		}
 	}
