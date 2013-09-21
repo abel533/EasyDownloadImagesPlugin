@@ -101,9 +101,8 @@ public class TiebaPanel extends BasePanel {
 		}
 		log("开始下载");
 		log("保存路径:"+savePath);
-		TiebaDownLoad normalDownLoad = new TiebaDownLoad();
-		this.setDownloadHelper(normalDownLoad);
-		normalDownLoad.downloadMore(savePath, 
+		this.setDownloadHelper(new TiebaDownLoad());
+		downloadHelper.downloadMore(savePath, 
 				url.getText(), 
 				selector.getText(), 
 				page.getText(),
