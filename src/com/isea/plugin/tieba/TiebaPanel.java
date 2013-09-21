@@ -149,4 +149,12 @@ public class TiebaPanel extends BasePanel {
 		pageSize.setText("");
 		firstRadio.setSelected(true);
 	}
+
+	@Override
+	public void stop() {
+		//停止下载
+		if(downloadHelper!=null){
+			downloadHelper.stop();
+		}
+	}
 }

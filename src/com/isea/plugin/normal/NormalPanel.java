@@ -150,6 +150,8 @@ public class NormalPanel extends BasePanel {
 	@Override
 	public void stop() {
 		//停止下载
-		downloadHelper.stop();
+		if(downloadHelper!=null){
+			downloadHelper.stop();
+		}
 	}
 }
