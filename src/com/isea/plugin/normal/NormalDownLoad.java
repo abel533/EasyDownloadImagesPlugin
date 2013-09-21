@@ -56,5 +56,6 @@ public class NormalDownLoad extends BaseDownload implements IDownload{
 	@Override
 	public void stop() {
 		isstart = false;
+		progress(0);
 	}
 }
