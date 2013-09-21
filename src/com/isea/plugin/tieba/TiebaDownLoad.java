@@ -20,7 +20,7 @@ public class TiebaDownLoad extends ALoggerProgress{
 	/**
 	 * 获取图片下载地址
 	 * @param url
-	 * @param selector
+	 * @param selector 
 	 * @return
 	 * @throws Exception
 	 */
