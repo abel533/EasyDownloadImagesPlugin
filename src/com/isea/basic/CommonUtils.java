@@ -17,7 +17,7 @@ public class CommonUtils {
 	 * @return
 	 */
 	public static String getProjectPath() throws Exception{
-		String temp = URLDecoder.decode(Main.class.getProtectionDomain().getCodeSource().getLocation().getFile(), "UTF-8");
+		String temp = URLDecoder.decode(CommonUtils.class.getProtectionDomain().getCodeSource().getLocation().getFile(), "UTF-8");
 		return temp.substring(0, temp.lastIndexOf('/'));  
 	}
 	
