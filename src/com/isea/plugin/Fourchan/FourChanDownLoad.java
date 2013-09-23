@@ -78,7 +78,7 @@ public class FourChanDownLoad extends BaseDownload{
 		List<String> srclist = new ArrayList<String>();
 		while(iter.hasNext()){
 			element = iter.next();
-			src = element.attr("src");
+			src = element.attr("href");
 			if(src.startsWith("//")){
 				src = "http:"+src;
 			}
