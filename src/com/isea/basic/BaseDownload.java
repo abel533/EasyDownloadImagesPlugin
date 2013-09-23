@@ -12,8 +12,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class BaseDownload extends ALoggerProgress{
-
+public abstract class BaseDownload extends ALoggerProgress implements IDownload{
+	protected boolean isstart = true;
 	/**
 	 * 获取图片下载地址
 	 * @param url
@@ -32,7 +32,10 @@ public class BaseDownload extends ALoggerProgress{
 		while(iter.hasNext()){
 			element = iter.next();
 			src = element.attr("src");
-			if(!src.startsWith("http")){
+			if(src.startsWith("//")){
+				src = "http:"+src;
+			}
+			else if(!src.startsWith("http")){
 				src = url+"/"+src;
 			}
 			srclist.add(src);
@@ -57,27 +60,32 @@ public class BaseDownload extends ALoggerProgress{
 			String fileName = null;
 			String filePath = null;
 			for(String src:srcList){
-				try {
-					url = new URL(src);
-					fileName = Md5Utils.getMd5(src) + getFileType(src);
-					filePath = savePath + fileName;
-					is = url.openStream();
-					fos = new FileOutputStream(filePath);
-					byte[] bytes = new byte[2048];
-					int length = 0;
-					while((length=is.read(bytes))>0){
-						fos.write(bytes, 0, length);
+				if(isstart){
+					try {
+						url = new URL(src);
+						fileName = Md5Utils.getMd5(src) + getFileType(src);
+						filePath = savePath + fileName;
+						is = url.openStream();
+						fos = new FileOutputStream(filePath);
+						byte[] bytes = new byte[2048];
+						int length = 0;
+						while((length=is.read(bytes))>0){
+							fos.write(bytes, 0, length);
+						}
+						log("fileName : "+fileName+" - 下载成功!");
+					} catch (Exception e) {
+						log(e.getMessage());
+					} finally {
+						if(is!=null){
+							is.close();
+						}
+						if(fos!=null){
+							fos.close();
+						}
 					}
-					log("fileName : "+fileName+" - 下载成功!");
-				} catch (Exception e) {
-					log(e.getMessage());
-				} finally {
-					if(is!=null){
-						is.close();
-					}
-					if(fos!=null){
-						fos.close();
-					}
+				}else{
+					log("终止下载!");
+					throw new StopException("终止下载!");
 				}
 			}
 		}
@@ -118,4 +126,13 @@ public class BaseDownload extends ALoggerProgress{
 			log(e.getMessage());
 		}
 	}
+	
+	public void stop() {
+		isstart = false;
+		progress(0);
+	}
+
+	@Override
+	public abstract void downloadMore(String savePath, String url, String selector,
+			String page, int start, int pageSize, boolean first);
 }
