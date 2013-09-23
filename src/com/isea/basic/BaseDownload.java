@@ -54,39 +54,13 @@ public abstract class BaseDownload extends ALoggerProgress implements IDownload{
 			if(!savePath.endsWith("/")){
 				savePath += "/";
 			}
-			URL url = null;
-			InputStream is = null;
-			FileOutputStream fos = null;
-			String fileName = null;
-			String filePath = null;
 			String src = null;
 			int size = srcList.size();
 			for(int i=0;i<size;i++){
 				if(isstart){
 					src = srcList.get(i);
 					progress((int)(100*(float)i)/size);
-					try {
-						url = new URL(src);
-						fileName = Md5Utils.getMd5(src) + getFileType(src);
-						filePath = savePath + fileName;
-						is = url.openStream();
-						fos = new FileOutputStream(filePath);
-						byte[] bytes = new byte[2048];
-						int length = 0;
-						while((length=is.read(bytes))>0){
-							fos.write(bytes, 0, length);
-						}
-						log("fileName : "+fileName+" - 下载成功!");
-					} catch (Exception e) {
-						log(e.getMessage());
-					} finally {
-						if(is!=null){
-							is.close();
-						}
-						if(fos!=null){
-							fos.close();
-						}
-					}
+					downLoadImage(src,savePath);
 				}else{
 					throw new StopException("终止下载!");
 				}
@@ -98,6 +72,39 @@ public abstract class BaseDownload extends ALoggerProgress implements IDownload{
 		}
 		else{
 			log("资源地址为空，无可下载内容！");
+		}
+	}
+	
+	/**
+	 * 下载图片
+	 * @param src
+	 * @param savePath
+	 * @throws Exception
+	 */
+	public void downLoadImage(String src,String savePath) throws Exception{
+		InputStream is = null;
+		FileOutputStream fos = null;
+		try {
+			URL url = new URL(src);
+			String fileName = Md5Utils.getMd5(src) + getFileType(src);
+			String filePath = savePath + fileName;
+			is = url.openStream();
+			fos = new FileOutputStream(filePath);
+			byte[] bytes = new byte[2048];
+			int length = 0;
+			while((length=is.read(bytes))>0){
+				fos.write(bytes, 0, length);
+			}
+			log("文件名 : "+fileName+" - 下载成功!");
+		} catch (Exception e) {
+			log(e.getMessage());
+		} finally {
+			if(is!=null){
+				is.close();
+			}
+			if(fos!=null){
+				fos.close();
+			}
 		}
 	}
 	
