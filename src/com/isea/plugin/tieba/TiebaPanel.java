@@ -74,7 +74,7 @@ public class TiebaPanel extends BasePanel {
 		
 		pageSize = new JTextField();
 		pageSize.setHorizontalAlignment(SwingConstants.RIGHT);
-		pageSize.setText("10");
+		pageSize.setText("1");
 		pageSize.setBounds(435, 127, 55, 30);
 		add(pageSize);
 		pageSize.setColumns(10);
