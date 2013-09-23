@@ -66,7 +66,7 @@ public class FourChanPanel extends BasePanel {
 		add(label_2);
 		
 		selector = new JTextField();
-		selector.setText("a.fileThumb img");
+		selector.setText("a.fileThumb");
 		selector.setBounds(70, 163, 420, 30);
 		add(selector);
 		selector.setColumns(10);
