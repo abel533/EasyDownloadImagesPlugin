@@ -21,8 +21,12 @@ public class TiebaDownLoad extends BaseDownload{
 			final String page,
 			final int start,
 			final int pageSize,
+			final int timeout,
 			final boolean first){
 		isstart = true;
+		//超时时间
+		setTimeout(timeout);
+		
 		String childUrl = null;
 		String pageTemp = page;
 		if(pageTemp.startsWith("/")){

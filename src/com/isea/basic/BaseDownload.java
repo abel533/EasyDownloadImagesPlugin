@@ -15,6 +15,10 @@ import org.jsoup.select.Elements;
 
 public abstract class BaseDownload extends ALoggerProgress implements IDownload{
 	protected boolean isstart = true;
+	private int timeout = 3000;
+	protected void setTimeout(int timeout){
+		this.timeout = timeout;
+	}
 	/**
 	 * 获取图片下载地址
 	 * @param url
@@ -23,7 +27,7 @@ public abstract class BaseDownload extends ALoggerProgress implements IDownload{
 	 * @throws Exception
 	 */
 	public List<String> getSrcPath(String url,String selector) throws Exception{
-		Document doc = Jsoup.connect(url).get();
+		Document doc = Jsoup.connect(url).timeout(timeout).get();
 		Elements elements = doc.select(selector);
 		Element element = null;
 		Iterator<Element> iter = elements.iterator();
@@ -163,5 +167,5 @@ public abstract class BaseDownload extends ALoggerProgress implements IDownload{
 	 */
 	@Override
 	public abstract void downloadMore(String savePath, String url, String selector,
-			String page, int start, int pageSize, boolean first);
+			String page, int start, int pageSize, int timeout, boolean first);
 }

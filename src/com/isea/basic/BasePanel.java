@@ -82,7 +82,7 @@ public abstract class BasePanel extends JPanel implements ILoggerProgress {
 	/**
 	 * 下载图片
 	 */
-	public abstract void download(String savePath);
+	public abstract void download(String savePath,int timeout);
 	
 	/**
 	 * 清空信息

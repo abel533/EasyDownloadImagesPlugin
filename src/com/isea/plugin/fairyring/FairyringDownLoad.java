@@ -21,8 +21,12 @@ public class FairyringDownLoad extends BaseDownload{
 			final String page,
 			final int start,
 			final int pageSize,
+			final int timeout,
 			final boolean first){
 		isstart = true;
+		//超时时间
+		setTimeout(timeout);
+		
 		String childUrl = null;
 		String tempUrl = url;
 		if(!tempUrl.endsWith("/")){

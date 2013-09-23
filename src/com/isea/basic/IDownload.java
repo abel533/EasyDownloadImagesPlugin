@@ -12,7 +12,7 @@ public interface IDownload extends ILoggerProgress{
 	 * @param first true - 首页不同
 	 */
 	void downloadMore(String savePath, String url,
-			String selector, String page, int start, int pageSize, boolean first);
+			String selector, String page, int start, int pageSize, int timeout, boolean first);
 	
 	/**
 	 * 停止下载

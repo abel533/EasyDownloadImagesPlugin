@@ -97,7 +97,7 @@ public class FairyringPanel extends BasePanel {
 	 * 下载按钮执行的方法
 	 */
 	@Override
-	public void download(String savePath) {
+	public void download(String savePath,int timeout) {
 		if(!checkField()){
 			return;
 		}
@@ -111,31 +111,31 @@ public class FairyringPanel extends BasePanel {
 				page.getText(),
 				Integer.parseInt(start.getText()),
 				Integer.parseInt(pageSize.getText()), 
+				timeout,
 				firstRadio.isSelected());
 	}
-
 	/**
 	 * 校验用户填入信息
 	 */
 	private boolean checkField(){
-		if(url.getText().equals("")){
-			JOptionPane.showMessageDialog(FairyringPanel.this, "基础地址不能为空", "提示", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		if(selector.getText().equals("")){
-			JOptionPane.showMessageDialog(FairyringPanel.this, "图片选择器不能为空", "提示", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		if(page.getText().equals("")){
-			JOptionPane.showMessageDialog(FairyringPanel.this, "后缀不能为空", "提示", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		if(start.getText().equals("")){
-			JOptionPane.showMessageDialog(FairyringPanel.this, "起始页码不能为空", "提示", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		if(pageSize.getText().equals("")){
-			JOptionPane.showMessageDialog(FairyringPanel.this, "页码限制不能为空", "提示", JOptionPane.WARNING_MESSAGE);
+		try {
+			if(url.getText().equals("")){
+				throw new Exception("基础地址不能为空");
+			}
+			if(selector.getText().equals("")){
+				throw new Exception("图片选择器不能为空");
+			}
+			if(page.getText().equals("")){
+				throw new Exception("后缀不能为空");
+			}
+			if(start.getText().equals("")){
+				throw new Exception("起始页码不能为空");
+			}
+			if(pageSize.getText().equals("")){
+				throw new Exception("页码限制不能为空");
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(FairyringPanel.this, e.getMessage(), "提示", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 		return true;
