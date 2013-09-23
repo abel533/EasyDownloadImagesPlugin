@@ -1,5 +1,6 @@
 package com.isea.basic;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -88,14 +89,19 @@ public abstract class BaseDownload extends ALoggerProgress implements IDownload{
 			URL url = new URL(src);
 			String fileName = Md5Utils.getMd5(src) + getFileType(src);
 			String filePath = savePath + fileName;
-			is = url.openStream();
-			fos = new FileOutputStream(filePath);
-			byte[] bytes = new byte[2048];
-			int length = 0;
-			while((length=is.read(bytes))>0){
-				fos.write(bytes, 0, length);
+			if(!checkFileExists(filePath)){
+				is = url.openStream();
+				fos = new FileOutputStream(filePath);
+				byte[] bytes = new byte[2048];
+				int length = 0;
+				while((length=is.read(bytes))>0){
+					fos.write(bytes, 0, length);
+				}
+				log("文件名 : "+fileName+" - 下载成功!");
 			}
-			log("文件名 : "+fileName+" - 下载成功!");
+			else{
+				log("文件名 : "+fileName+" - 已经存在!");
+			}
 		} catch (Exception e) {
 			log(e.getMessage());
 		} finally {
@@ -108,6 +114,25 @@ public abstract class BaseDownload extends ALoggerProgress implements IDownload{
 		}
 	}
 	
+	/**
+	 * 判断文件是否存在
+	 * @param filePath
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean checkFileExists(String filePath) throws Exception{
+		File file = new File(filePath);
+		if(file.exists()){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 获取图片类型
+	 * @param src
+	 * @return
+	 */
 	public String getFileType(String src){
 		String srcTemp = src.toLowerCase();
 		if(srcTemp.endsWith("jpg")){
@@ -126,26 +151,16 @@ public abstract class BaseDownload extends ALoggerProgress implements IDownload{
 	}
 	
 	/**
-	 * 下载图片
-	 * @param savePath
-	 * @param url
-	 * @param selector
+	 * 停止下载
 	 */
-	public void download(String savePath, String url, String selector){
-		List<String> list = null;
-		try {
-			list = getSrcPath(url, selector);
-			downLoadImages(list, savePath);
-		} catch (Exception e) {
-			log(e.getMessage());
-		}
-	}
-	
 	public void stop() {
 		isstart = false;
 		progress(0);
 	}
 
+	/**
+	 * 批量下载
+	 */
 	@Override
 	public abstract void downloadMore(String savePath, String url, String selector,
 			String page, int start, int pageSize, boolean first);
