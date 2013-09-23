@@ -22,4 +22,4 @@ EasyDownloadImages插件开发
 已有插件
  * 一般模式 - 针对page/,page/2,page/3这样的网址
  * 贴吧模式 - 针对url?page=2,url?page=3这样的网址
- * 4chan - 针对一般模式的网址，但是图片地址开头为//的网站
+ * 4chan - 该模式已经并入到一般模式
