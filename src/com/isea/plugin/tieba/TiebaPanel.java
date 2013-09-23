@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import com.isea.basic.BasePanel;
 
@@ -20,72 +21,72 @@ public class TiebaPanel extends BasePanel {
 	private JTextField start;
 	
 	public TiebaPanel() {
+		setBorder(new EmptyBorder(2, 4, 2, 0));
 		setLayout(null);
 		
 		JLabel lblhttpwwwblogcompage = new JLabel("该模式针对地址为：http://tieba.baidu.com/p/********?pn=2 类似地址的网站");
-		lblhttpwwwblogcompage.setBounds(31, 10, 544, 26);
+		lblhttpwwwblogcompage.setBounds(69, 10, 431, 26);
 		add(lblhttpwwwblogcompage);
 		lblhttpwwwblogcompage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblhttpwwwblogcompage.setPreferredSize(new Dimension(200, 26));
 		
 		firstRadio = new JRadioButton("首地址不带页码");
 		firstRadio.setSelected(true);
-		firstRadio.setBounds(116, 130, 116, 23);
+		firstRadio.setBounds(70, 130, 116, 23);
 		add(firstRadio);
 		
 		JLabel label_1 = new JLabel("首地址：");
-		label_1.setBounds(24, 135, 52, 15);
+		label_1.setBounds(0, 135, 52, 15);
 		add(label_1);
 		
 		JLabel lblNewLabel = new JLabel("基础地址：");
-		lblNewLabel.setBounds(24, 54, 65, 15);
+		lblNewLabel.setBounds(0, 54, 65, 15);
 		add(lblNewLabel);
 		
 		url = new JTextField();
-		url.setBounds(119, 46, 450, 30);
+		url.setBounds(70, 46, 420, 30);
 		add(url);
-		url.setText("http://tieba.baidu.com/p/2607205776");
 		url.setColumns(10);
 		
 		JLabel label = new JLabel("连续地址：");
-		label.setBounds(24, 95, 65, 15);
+		label.setBounds(0, 95, 65, 15);
 		add(label);
 		
 		page = new JTextField();
-		page.setBounds(119, 87, 450, 30);
+		page.setBounds(70, 87, 420, 30);
 		add(page);
-		page.setText("pn");
+		page.setText("a");
 		page.setColumns(10);
 		
 		JLabel label_2 = new JLabel("图片选择器：");
-		label_2.setBounds(24, 170, 86, 15);
+		label_2.setBounds(0, 170, 86, 15);
 		add(label_2);
 		
 		selector = new JTextField();
 		selector.setText("img.BDE_Image");
-		selector.setBounds(119, 163, 450, 30);
+		selector.setBounds(70, 163, 420, 30);
 		add(selector);
 		selector.setColumns(10);
 		
 		JLabel label_3 = new JLabel("页码限制：");
-		label_3.setBounds(420, 135, 69, 15);
+		label_3.setBounds(360, 135, 69, 15);
 		add(label_3);
 		
 		pageSize = new JTextField();
 		pageSize.setHorizontalAlignment(SwingConstants.RIGHT);
 		pageSize.setText("10");
-		pageSize.setBounds(514, 127, 55, 30);
+		pageSize.setBounds(435, 127, 55, 30);
 		add(pageSize);
 		pageSize.setColumns(10);
 		
 		JLabel label_4 = new JLabel("起始页码：");
-		label_4.setBounds(248, 135, 69, 15);
+		label_4.setBounds(200, 135, 69, 15);
 		add(label_4);
 		
 		start = new JTextField();
 		start.setHorizontalAlignment(SwingConstants.RIGHT);
 		start.setText("1");
-		start.setBounds(350, 126, 55, 30);
+		start.setBounds(280, 126, 55, 30);
 		add(start);
 		start.setColumns(10);
 
