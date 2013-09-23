@@ -33,28 +33,36 @@ public class FourChanDownLoad extends BaseDownload{
 		}
 		int _start = start;
 		int max = start + pageSize;
+		int count = 1;
 		List<String> list = null;
 		
-		for(;_start<max;_start++){
-			progress((int)(100*(float)_start-start)/pageSize);
-			tips("正在下载第 "+_start+" 页");
-			if(_start==1&&first){
-				childUrl = url + pageTemp;
+		for(;_start<max;_start++,count++){
+			if(isstart){
+				tips("正在下载 "+count+"/"+pageSize);
+				if(_start==1&&first){
+					childUrl = url + pageTemp;
+				}
+				else{
+					childUrl = url + pageTemp + _start;
+				}
+				try {
+					log("开始下载地址:"+childUrl);
+					list = getSrcPath(childUrl, selector);
+					downLoadImages(list, savePath);
+				} catch (StopException e) {
+					//停止下载
+					log(e.getMessage());
+					break;
+				} catch (Exception e) {
+					log(e.getMessage());
+				}
+			} else {
+				log("终止下载!");
 			}
-			else{
-				childUrl = url + pageTemp + _start;
-			}
-			try {
-				log("开始下载地址:"+childUrl);
-				list = getSrcPath(childUrl, selector);
-				downLoadImages(list, savePath);
-			} catch (StopException e) {
-				//停止下载
-				log(e.getMessage());
-				break;
-			} catch (Exception e) {
-				log(e.getMessage());
-			}
+		}
+		if(isstart){
+			tips("下载完成");
+			progress(100);
 		}
 	}
 

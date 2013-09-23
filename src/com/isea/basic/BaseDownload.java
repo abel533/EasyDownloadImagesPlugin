@@ -59,8 +59,12 @@ public abstract class BaseDownload extends ALoggerProgress implements IDownload{
 			FileOutputStream fos = null;
 			String fileName = null;
 			String filePath = null;
-			for(String src:srcList){
+			String src = null;
+			int size = srcList.size();
+			for(int i=0;i<size;i++){
 				if(isstart){
+					src = srcList.get(i);
+					progress((int)(100*(float)i)/size);
 					try {
 						url = new URL(src);
 						fileName = Md5Utils.getMd5(src) + getFileType(src);
@@ -86,6 +90,10 @@ public abstract class BaseDownload extends ALoggerProgress implements IDownload{
 				}else{
 					throw new StopException("终止下载!");
 				}
+			}
+			//进度条满
+			if(isstart){
+				progress(100);
 			}
 		}
 		else{
