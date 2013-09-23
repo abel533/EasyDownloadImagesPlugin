@@ -84,7 +84,6 @@ public abstract class BaseDownload extends ALoggerProgress implements IDownload{
 						}
 					}
 				}else{
-					log("终止下载!");
 					throw new StopException("终止下载!");
 				}
 			}
