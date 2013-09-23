@@ -99,6 +99,7 @@ public class NormalPanel extends BasePanel {
 		if(!checkField()){
 			return;
 		}
+		progress(0);
 		log("开始下载");
 		log("保存路径:"+savePath);
 		this.setDownloadHelper(new NormalDownLoad());
@@ -121,10 +122,6 @@ public class NormalPanel extends BasePanel {
 		}
 		if(selector.getText().equals("")){
 			JOptionPane.showMessageDialog(NormalPanel.this, "图片选择器不能为空", "提示", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		if(page.getText().equals("")){
-			JOptionPane.showMessageDialog(NormalPanel.this, "连续地址不能为空", "提示", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 		if(start.getText().equals("")){

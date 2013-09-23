@@ -18,20 +18,26 @@ public class NormalDownLoad extends BaseDownload{
 		isstart = true;
 		String childUrl = null;
 		String pageTemp = page;
-		if(!pageTemp.startsWith("/")){
-			pageTemp = "/"+pageTemp;
+		if(pageTemp==null||pageTemp.equals("")){
+			pageTemp = "";
 		}
-		if(!pageTemp.endsWith("/")){
-			pageTemp += "/";
+		else {
+			if(!pageTemp.startsWith("/")){
+				pageTemp = "/"+pageTemp;
+			}
+			if(!pageTemp.endsWith("/")){
+				pageTemp += "/";
+			}
 		}
 		int _start = start;
+		int max = start + pageSize;
 		List<String> list = null;
 		
-		for(;_start<pageSize;_start++){
+		for(;_start<max;_start++){
 			progress((int)(100*(float)_start-start)/pageSize);
 			tips("正在下载第 "+_start+" 页");
 			if(_start==1&&first){
-				childUrl = url;
+				childUrl = url + pageTemp;
 			}
 			else{
 				childUrl = url + pageTemp + _start;

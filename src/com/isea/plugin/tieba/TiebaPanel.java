@@ -100,6 +100,7 @@ public class TiebaPanel extends BasePanel {
 		if(!checkField()){
 			return;
 		}
+		progress(0);
 		log("开始下载");
 		log("保存路径:"+savePath);
 		this.setDownloadHelper(new TiebaDownLoad());

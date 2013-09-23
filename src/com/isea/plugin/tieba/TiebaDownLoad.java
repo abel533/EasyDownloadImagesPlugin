@@ -22,6 +22,7 @@ public class TiebaDownLoad extends BaseDownload{
 			final int start,
 			final int pageSize,
 			final boolean first){
+		isstart = true;
 		String childUrl = null;
 		String pageTemp = page;
 		if(pageTemp.startsWith("/")){
@@ -33,9 +34,10 @@ public class TiebaDownLoad extends BaseDownload{
 		pageTemp = "?"+pageTemp+"=";
 		
 		int _start = start;
+		int max = start + pageSize;
 		List<String> list = null;
 		
-		for(;_start<pageSize;_start++){
+		for(;_start<max;_start++){
 			progress((int)(100*(float)_start-start)/pageSize);
 			tips("正在下载第 "+_start+" 页");
 			if(_start==1&&first){
