@@ -55,7 +55,7 @@ public class TiebaPanel extends BasePanel {
 		page = new JTextField();
 		page.setBounds(70, 87, 420, 30);
 		add(page);
-		page.setText("a");
+		page.setText("pn");
 		page.setColumns(10);
 		
 		JLabel label_2 = new JLabel("图片选择器：");
