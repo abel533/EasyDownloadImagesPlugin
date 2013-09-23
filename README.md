@@ -18,3 +18,8 @@ EasyDownloadImages插件开发
 插件使用
  * 将插件的jar包放到plugin下，添加plugin.ini配置，程序启动即可看到
  * 每个插件可以拥有一个对应的plugin.ini，如:tieba.ini，添加插件时，将ini和jar放入到plugin下即可。
+
+已有插件
+ * 一般模式 - 针对page/,page/2,page/3这样的网址
+ * 贴吧模式 - 针对url?page=2,url?page=3这样的网址
+ * 4chan - 针对一般模式的网址，但是图片地址开头为//的网站
