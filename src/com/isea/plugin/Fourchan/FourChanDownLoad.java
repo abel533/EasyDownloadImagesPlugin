@@ -10,11 +10,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.isea.basic.BaseDownload;
-import com.isea.basic.IDownload;
+import com.isea.basic.StopException;
 
-public class FourChanDownLoad extends BaseDownload implements IDownload{
-	private boolean isstart = true;
-	
+public class FourChanDownLoad extends BaseDownload{
 	@Override
 	public void downloadMore(final String savePath, 
 			final String url, 
@@ -37,26 +35,24 @@ public class FourChanDownLoad extends BaseDownload implements IDownload{
 		List<String> list = null;
 		
 		for(;_start<pageSize;_start++){
-			if(isstart){
-				progress((int)(100*(float)_start-start)/pageSize);
-				tips("正在下载第 "+_start+" 页");
-				if(_start==1&&first){
-					childUrl = url + pageTemp;
-				}
-				else{
-					childUrl = url + pageTemp + _start;
-				}
-				try {
-					log("开始下载地址:"+childUrl);
-					list = getSrcPath(childUrl, selector);
-					downLoadImages(list, savePath);
-				} catch (Exception e) {
-					log(e.getMessage());
-				}
+			progress((int)(100*(float)_start-start)/pageSize);
+			tips("正在下载第 "+_start+" 页");
+			if(_start==1&&first){
+				childUrl = url + pageTemp;
 			}
 			else{
-				log("终止下载!");
+				childUrl = url + pageTemp + _start;
+			}
+			try {
+				log("开始下载地址:"+childUrl);
+				list = getSrcPath(childUrl, selector);
+				downLoadImages(list, savePath);
+			} catch (StopException e) {
+				//停止下载
+				log(e.getMessage());
 				break;
+			} catch (Exception e) {
+				log(e.getMessage());
 			}
 		}
 	}
@@ -83,11 +79,5 @@ public class FourChanDownLoad extends BaseDownload implements IDownload{
 			srclist.add(src);
 		}
 		return srclist;
-	}
-
-	@Override
-	public void stop() {
-		isstart = false;
-		progress(0);
 	}
 }
